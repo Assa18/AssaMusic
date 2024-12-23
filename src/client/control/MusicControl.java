@@ -27,6 +27,8 @@ public class MusicControl implements MusicEventListener {
     public File getSongSource(String name) {
         MusicRequest r = new PlayRequest();
         r.send(name);
+
+        r.recieve();
         return null;
     }
 }

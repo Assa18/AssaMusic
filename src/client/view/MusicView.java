@@ -68,4 +68,8 @@ public class MusicView extends JFrame {
     public void addListener(MusicEventListener listener) {
         musicPanel.addListener(listener);
     }
+
+    public void setPlayer(MusicPlayer player) {
+        this.player = player;
+    }
 }
