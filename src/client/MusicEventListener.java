@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface MusicEventListener {
     List<String> getSongNames(String searchString);
-    File getSongSource(String name);
+    File getSongSource(String id);
 }

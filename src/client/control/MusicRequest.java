@@ -10,5 +10,4 @@ public abstract class MusicRequest {
     protected BufferedWriter bw;
 
     protected abstract void send(String msg);
-    protected abstract void recieve();
 }

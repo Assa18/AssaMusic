@@ -26,16 +26,15 @@ public class PlayRequest extends MusicRequest{
         }
     }
 
-    @Override
-    protected void recieve() {
+    protected File receive() {
         try {
             InputStream inputStream = socket.getInputStream();
-            FileOutputStream fileOutputStream = new FileOutputStream("recieved.wav");
+            FileOutputStream fileOutputStream = new FileOutputStream("received.wav");
 
             byte[] buffer = new byte[4096];
             int bytesRead;
 
-            System.out.println("Recieving music..");
+            System.out.println("Receiving music..");
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 fileOutputStream.write(buffer, 0, bytesRead);
             }
@@ -47,16 +46,6 @@ public class PlayRequest extends MusicRequest{
         }
 
 
-        File audioFile = new File("recieved.wav");
-        try {
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioStream);
-
-            clip.start();
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            throw new RuntimeException(e);
-        }
+        return new File("received.wav");
     }
 }

@@ -16,6 +16,13 @@ public class Music {
         this.id = UUID.randomUUID().toString();
     }
 
+    public Music() {
+        this.author = null;
+        this.path = null;
+        this.title = null;
+        this.id = UUID.randomUUID().toString();
+    }
+
     public String getId() {
         if (id == null) {
             id = UUID.randomUUID().toString();

@@ -5,9 +5,4 @@ public class SearchRequest extends MusicRequest{
     protected void send(String msg) {
 
     }
-
-    @Override
-    protected void recieve() {
-
-    }
 }
