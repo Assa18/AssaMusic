@@ -8,10 +8,9 @@ import server.Music;
 
 public class Main {
     public static void main(String[] args) {
-        Music musicModel = new Music();
-        MusicView view = new MusicView(musicModel);
+        MusicView view = new MusicView();
         MusicPlayer player = MusicPlayerFactory.getMusicPlayer();
-        MusicControl control = new MusicControl(view, player, musicModel);
+        MusicControl control = new MusicControl(view, player);
 
         view.setVisible(true);
     }

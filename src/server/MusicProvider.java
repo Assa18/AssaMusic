@@ -1,13 +1,15 @@
 package server;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MusicProvider {
     private Map<String, Music> musics;
+
+    private boolean match(String strSource, String strSearch) {
+        return strSource.toLowerCase().contains(strSearch.toLowerCase());
+    }
 
     private boolean loaded = false;
 
@@ -39,7 +41,7 @@ public class MusicProvider {
 
             instance.musics = br.lines().map(l-> {
                 String[] data = l.split(";");
-                Music m = new Music(data[0],data[1], data[2]);
+                Music m = new Music(UUID.randomUUID().toString(), data[0],data[1], data[2]);
                 return m;
             }).collect(Collectors.toMap(Music::getId,m->m));
 
@@ -55,7 +57,7 @@ public class MusicProvider {
             BufferedWriter bw = new BufferedWriter(new FileWriter("res/input.txt"));
 
             musics.forEach((k,m) ->{
-                String line = m.getTitle()+";"+m.getPath()+";"+m.getAuthor()+"\n";
+                String line = m.getTitle()+";"+m.getAuthor()+";"+m.getPath()+"\n";
                 try {
                     bw.write(line);
                 } catch (IOException e) {
@@ -70,7 +72,15 @@ public class MusicProvider {
     }
 
     public List<Music> getByTitle(String title) {
-        return null;
+        List<Music> tmp = new LinkedList<>();
+
+        musics.forEach((s, music) -> {
+            if (match(music.getTitle() + music.getAuthor(), title)) {
+                tmp.add(music);
+            }
+        });
+
+        return tmp;
     }
 
     public Music getById(String id) {

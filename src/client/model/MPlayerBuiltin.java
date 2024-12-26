@@ -23,6 +23,7 @@ public class MPlayerBuiltin implements MusicPlayer {
 
     @Override
     public void start() {
+        clip.setFramePosition(0);
         clip.start();
     }
 
@@ -33,6 +34,11 @@ public class MPlayerBuiltin implements MusicPlayer {
 
     @Override
     public void resume() {
+        clip.start();
+    }
 
+    @Override
+    public boolean isRunning() {
+        return clip.isRunning();
     }
 }

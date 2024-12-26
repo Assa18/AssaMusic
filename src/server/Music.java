@@ -9,18 +9,18 @@ public class Music {
     private String path;
     private String id;
 
-    public Music(String title, String path, String author) {
+    public Music(String id, String title, String author, String path) {
         this.author = author;
         this.path = path;
         this.title = title;
-        this.id = UUID.randomUUID().toString();
+        this.id = id;
     }
 
     public Music() {
-        this.author = null;
-        this.path = null;
-        this.title = null;
-        this.id = UUID.randomUUID().toString();
+        this.author = "";
+        this.path = "";
+        this.title = "";
+        this.id = "";
     }
 
     public String getId() {
@@ -45,6 +45,11 @@ public class Music {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Override
+    public String toString() {
+        return id + ";" + title + ";" + author + ";" + path;
     }
 
     public String getTitle() {

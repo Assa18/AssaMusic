@@ -1,6 +1,7 @@
 package client.view;
 
 import client.MusicEventListener;
+import client.model.MusicModel;
 import client.model.MusicPlayer;
 import client.model.MusicPlayerFactory;
 import server.Music;
@@ -14,7 +15,7 @@ import java.io.IOException;
 
 public class MusicPanel extends JPanel {
     private MusicEventListener listener;
-    private Music musicModel;
+    private MusicModel musicModel = MusicModel.getInstance();
 
     private MusicPlayer player;
 
@@ -23,25 +24,20 @@ public class MusicPanel extends JPanel {
 
     private JLabel lblInfo;
     private JButton btnStart;
-    private JPanel imagePanel;
-    public MusicPanel(Music musicModel) {
+    private ImagePanel imagePanel;
+
+    public MusicPanel() {
         setBackground(Color.lightGray);
         setLayout(new BorderLayout());
-        lblInfo = new JLabel("this is the music");
+        lblInfo = new JLabel(musicModel.getActiveModel().getTitle() + "-" + musicModel.getActiveModel().getAuthor());
         add(lblInfo, BorderLayout.NORTH);
 
         controlPanel = new JPanel();
-        btnStart = new JButton("Start");
+        btnStart = new JButton("Stop");
         controlPanel.add(btnStart);
 
-        imagePanel = new JPanel();
-        try {
-            image = ImageIO.read(new File("res/photo/hatter.jpg"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        imagePanel = new ImagePanel();
 
-        //imagePanel.getGraphics().drawImage(image,0,0,null);
         add(imagePanel, BorderLayout.CENTER);
         add(btnStart, BorderLayout.SOUTH);
 
@@ -49,13 +45,21 @@ public class MusicPanel extends JPanel {
         this.player = MusicPlayerFactory.getMusicPlayer();
 
         btnStart.addActionListener(e -> {
-            File input = listener.getSongSource(musicModel.getId());
-            player.load(input);
-            player.start();
+            if (player.isRunning()) {
+                btnStart.setText("Start");
+                player.stop();
+            }
+            else{
+                btnStart.setText("Stop");
+                player.resume();
+            }
         });
     }
 
     public void addListener(MusicEventListener listener) {
         this.listener = listener;
+    }
+    public void refresh() {
+        lblInfo.setText(musicModel.getActiveModel().getTitle()+"-"+musicModel.getActiveModel().getAuthor());
     }
 }

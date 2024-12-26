@@ -1,5 +1,7 @@
 package client.view;
 
+import client.model.MusicModel;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -16,6 +18,8 @@ public class QueuePanel extends JPanel {
 
     private JPanel curPanel;
     private JPanel nextPanel;
+
+    private MusicModel musicModel = MusicModel.getInstance();
     public QueuePanel() {
         setBackground(Color.lightGray);
 
@@ -33,7 +37,7 @@ public class QueuePanel extends JPanel {
         nextPanel = new JPanel();
 
         lblCur = new JLabel("Current:");
-        lblCurTitle = new JLabel("");
+        lblCurTitle = new JLabel(musicModel.getActiveModel().getTitle()+"-"+musicModel.getActiveModel().getAuthor());
         lblNext = new JLabel("Next:");
         queueList = new JList();
 
@@ -45,5 +49,9 @@ public class QueuePanel extends JPanel {
 
         add(curPanel, BorderLayout.NORTH);
         add(nextPanel, BorderLayout.CENTER);
+    }
+
+    public void refresh() {
+        lblCurTitle.setText(musicModel.getActiveModel().getTitle()+"-"+musicModel.getActiveModel().getAuthor());
     }
 }

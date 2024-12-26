@@ -9,8 +9,6 @@ public class PlayCommand implements RequestCommand{
     public PlayCommand() {
         provider = MusicProvider.getInstance();
         provider.load();
-
-        provider.save();
     }
     @Override
     public void execute(Socket socket, String par) {

@@ -1,6 +1,7 @@
 package client.view;
 
 import client.MusicEventListener;
+import client.model.MusicModel;
 import client.model.MusicPlayer;
 import client.model.MusicPlayerFactory;
 import server.Music;
@@ -22,9 +23,7 @@ public class MusicView extends JFrame {
 
     private MusicPlayer player;
 
-    private Music musicModel;
-    public MusicView(Music musicModel) {
-        this.musicModel = musicModel;
+    public MusicView() {
         contentPanel = new JPanel();
         controlPanel = new JPanel();
 
@@ -44,7 +43,7 @@ public class MusicView extends JFrame {
         cardPanel.setLayout(layout);
         contentPanel.add(cardPanel, BorderLayout.CENTER);
 
-        musicPanel = new MusicPanel(musicModel);
+        musicPanel = new MusicPanel();
         searchPanel = new SearchPanel();
         queuePanel = new QueuePanel();
 
@@ -64,5 +63,11 @@ public class MusicView extends JFrame {
     }
     public void addListener(MusicEventListener listener) {
         musicPanel.addListener(listener);
+        searchPanel.addListener(listener);
+    }
+
+    public void refresh() {
+        musicPanel.refresh();
+        queuePanel.refresh();
     }
 }

@@ -6,7 +6,8 @@ public class MusicPlayerFactory {
     static private MusicPlayer instance = null;
     public static MusicPlayer getMusicPlayer() {
         if (instance == null) {
-            return new MPlayerBuiltin();
+            System.out.println("MPlayer initialized!");
+            instance = new MPlayerJLayer();
         }
         return instance;
     }

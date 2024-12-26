@@ -1,9 +1,13 @@
 package client;
 
+import server.Music;
+
 import java.io.File;
 import java.util.List;
 
 public interface MusicEventListener {
-    List<String> getSongNames(String searchString);
-    File getSongSource(String id);
+    void getMusicModels(String searchString);
+    void getSongSource(String path);
+    void setActiveMusic(Music music);
+    void addToQueue(Music music);
 }

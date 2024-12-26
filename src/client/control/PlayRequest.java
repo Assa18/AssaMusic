@@ -19,7 +19,7 @@ public class PlayRequest extends MusicRequest{
         try {
             bw.write(0+"\n");
             bw.flush();
-            bw.write("res/zene.wav\n");
+            bw.write(msg+"\n");
             bw.flush();
         } catch (IOException e) {
             System.out.println("Error with sending request!");

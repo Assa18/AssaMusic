@@ -1,7 +1,15 @@
 package client.view;
 
+import client.MusicEventListener;
+import client.model.MusicModel;
+import client.model.MusicPlayer;
+import client.model.MusicPlayerFactory;
+import server.Music;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class SearchPanel extends JPanel {
 
@@ -15,6 +23,11 @@ public class SearchPanel extends JPanel {
 
     private JPanel buttonPanel;
     private JList results;
+    private DefaultListModel<String> listModel;
+    private MusicModel musicModel = MusicModel.getInstance();
+    private MusicPlayer player = MusicPlayerFactory.getMusicPlayer();
+
+    private MusicEventListener listener;
     public SearchPanel() {
         setBackground(Color.lightGray);
         searchToolPanel = new JPanel();
@@ -36,7 +49,8 @@ public class SearchPanel extends JPanel {
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(2,1));
 
-        results = new JList();
+        listModel = new DefaultListModel<>();
+        results = new JList<>(listModel);
         resultsPanel.add(results,BorderLayout.CENTER);
 
 
@@ -48,5 +62,26 @@ public class SearchPanel extends JPanel {
         setLayout(new BorderLayout());
         add(searchToolPanel, BorderLayout.NORTH);
         add(resultsPanel, BorderLayout.CENTER);
+
+        searchButton.addActionListener(e -> {
+            listener.getMusicModels(searchField.getText());
+
+            listModel.clear();
+            musicModel.getSearchList().forEach(m -> listModel.addElement(m.getTitle() + "-" + m.getAuthor()));
+        });
+
+        playButton.addActionListener(e -> {
+            listener.setActiveMusic(musicModel.getSearchList().get(results.getSelectedIndex()));
+            listener.getSongSource(musicModel.getActiveModel().getPath());
+            player.start();
+        });
+
+        addQueueButton.addActionListener(e -> {
+
+        });
+    }
+
+    public void addListener(MusicEventListener listener) {
+        this.listener = listener;
     }
 }

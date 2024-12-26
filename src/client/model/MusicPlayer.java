@@ -8,4 +8,6 @@ public interface MusicPlayer {
     void start();
     void stop();
     void resume();
+
+    boolean isRunning();
 }
