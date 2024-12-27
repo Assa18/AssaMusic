@@ -11,6 +11,7 @@ public class Main {
         MusicView view = new MusicView();
         MusicPlayer player = MusicPlayerFactory.getMusicPlayer();
         MusicControl control = new MusicControl(view, player);
+        player.setListener(control);
 
         view.setVisible(true);
     }

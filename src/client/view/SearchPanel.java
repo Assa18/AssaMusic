@@ -28,6 +28,8 @@ public class SearchPanel extends JPanel {
     private MusicPlayer player = MusicPlayerFactory.getMusicPlayer();
 
     private MusicEventListener listener;
+
+    private JScrollPane scrollPane;
     public SearchPanel() {
         setBackground(Color.lightGray);
         searchToolPanel = new JPanel();
@@ -51,7 +53,8 @@ public class SearchPanel extends JPanel {
 
         listModel = new DefaultListModel<>();
         results = new JList<>(listModel);
-        resultsPanel.add(results,BorderLayout.CENTER);
+        scrollPane = new JScrollPane(results);
+        resultsPanel.add(scrollPane,BorderLayout.CENTER);
 
 
         buttonPanel.add(playButton);
@@ -74,10 +77,12 @@ public class SearchPanel extends JPanel {
             listener.setActiveMusic(musicModel.getSearchList().get(results.getSelectedIndex()));
             listener.getSongSource(musicModel.getActiveModel().getPath());
             player.start();
+
+            listener.fillQueue();
         });
 
         addQueueButton.addActionListener(e -> {
-
+            listener.addToQueue(musicModel.getSearchList().get(results.getSelectedIndex()));
         });
     }
 

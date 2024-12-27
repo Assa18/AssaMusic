@@ -1,5 +1,7 @@
 package client.model;
 
+import client.MusicEventListener;
+
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +12,9 @@ public class MPlayerBuiltin implements MusicPlayer {
     private Clip clip;
     @Override
     public void load(File file) {
+        if (clip != null && clip.isOpen()) {
+            clip.close();
+        }
         source = file;
         try {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(source);
@@ -40,5 +45,15 @@ public class MPlayerBuiltin implements MusicPlayer {
     @Override
     public boolean isRunning() {
         return clip.isRunning();
+    }
+
+    @Override
+    public void setListener(MusicEventListener listener) {
+
+    }
+
+    @Override
+    public float getPosition() {
+        return 0;
     }
 }

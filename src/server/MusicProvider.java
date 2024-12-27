@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 public class MusicProvider {
     private Map<String, Music> musics;
+    private Random random;
 
     private boolean match(String strSource, String strSearch) {
         return strSource.toLowerCase().contains(strSearch.toLowerCase());
@@ -24,6 +25,7 @@ public class MusicProvider {
 
     private MusicProvider() {
         this.musics = new HashMap<>();
+        this.random = new Random();
     }
 
     public synchronized void load() {
@@ -81,6 +83,18 @@ public class MusicProvider {
         });
 
         return tmp;
+    }
+
+    public Music getRandom() {
+        int index = random.nextInt(0, musics.size());
+        int i = 0;
+        for (Map.Entry<String, Music> entry : musics.entrySet()){
+            if (i == index) {
+                return entry.getValue();
+            }
+            i++;
+        }
+        return null;
     }
 
     public Music getById(String id) {

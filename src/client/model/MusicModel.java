@@ -9,8 +9,18 @@ import java.util.Queue;
 public class MusicModel {
     private Music activeModel;
     private List<Music> searchList;
-    private Queue<Music> queueList;
+    private List<Music> queueList;
     private static MusicModel instance = null;
+
+    private float progress=0;
+
+    public float getProgress() {
+        return progress;
+    }
+
+    public void setProgress(float progress) {
+        this.progress = progress;
+    }
 
     public static MusicModel getInstance() {
         if (instance == null){
@@ -35,11 +45,11 @@ public class MusicModel {
         this.searchList = searchList;
     }
 
-    public Queue<Music> getQueueList() {
+    public List<Music> getQueueList() {
         return queueList;
     }
 
-    public void setQueueList(Queue<Music> queueList) {
+    public void setQueueList(List<Music> queueList) {
         this.queueList = queueList;
     }
 

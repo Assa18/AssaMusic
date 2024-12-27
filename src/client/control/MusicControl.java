@@ -13,6 +13,8 @@ import java.util.List;
 public class MusicControl implements MusicEventListener {
     private MusicView view;
 
+    private int queueSize = 15;
+
     private MusicPlayer player;
     private MusicModel musicModel;
 
@@ -49,5 +51,65 @@ public class MusicControl implements MusicEventListener {
     @Override
     public void addToQueue(Music music) {
         musicModel.getQueueList().add(music);
+        view.refresh();
+    }
+
+    @Override
+    public void addToQueue(List<Music> musicList) {
+        musicModel.getQueueList().addAll(musicList);
+        view.refresh();
+    }
+
+    @Override
+    public void removeFromQueue(Music music) {
+        musicModel.getQueueList().remove(music);
+        view.refresh();
+    }
+
+    @Override
+    public void spikNQueue(int n) {
+        for (int i = 0;i < n;i++) {
+            musicModel.getQueueList().removeLast();
+        }
+        view.refresh();
+    }
+
+    @Override
+    public void fillQueue() {
+        if (musicModel.getQueueList().size() >= queueSize) {
+            return;
+        }
+
+        int nr = queueSize - musicModel.getQueueList().size();
+
+        RandomRequest r = new RandomRequest();
+        r.send(nr+"");
+
+        List<Music> tmp = r.receive();
+
+        tmp.forEach(music -> {
+            musicModel.getQueueList().addFirst(music);
+        });
+
+        view.refresh();
+    }
+
+    @Override
+    public void playNextSong() {
+        System.out.println("Innen!");
+        if (musicModel.getQueueList().isEmpty()) {
+            return;
+        }
+
+        setActiveMusic(musicModel.getQueueList().removeLast());
+        getSongSource(musicModel.getActiveModel().getPath());
+        player.start();
+        fillQueue();
+        view.refresh();
+    }
+
+    @Override
+    public void setPosition(float pos) {
+        musicModel.setProgress(pos);
     }
 }

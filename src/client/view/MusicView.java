@@ -8,6 +8,10 @@ import server.Music;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MusicView extends JFrame {
     private JPanel controlPanel;
@@ -60,14 +64,17 @@ public class MusicView extends JFrame {
         setContentPane(contentPanel);
         setBounds(20,20,500,500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+       
     }
     public void addListener(MusicEventListener listener) {
         musicPanel.addListener(listener);
         searchPanel.addListener(listener);
+        queuePanel.addListener(listener);
     }
 
     public void refresh() {
         musicPanel.refresh();
         queuePanel.refresh();
+        queuePanel.refreshListModel();
     }
 }

@@ -1,5 +1,7 @@
 package client.model;
 
+import client.MusicEventListener;
+
 import java.io.File;
 
 public interface MusicPlayer {
@@ -10,4 +12,7 @@ public interface MusicPlayer {
     void resume();
 
     boolean isRunning();
+    void setListener(MusicEventListener listener);
+
+    float getPosition();
 }

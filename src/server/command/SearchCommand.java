@@ -1,4 +1,6 @@
-package server;
+package server.command;
+
+import server.MusicProvider;
 
 import java.io.*;
 import java.net.Socket;

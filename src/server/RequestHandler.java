@@ -1,5 +1,10 @@
 package server;
 
+import server.command.PlayCommand;
+import server.command.RandomCommand;
+import server.command.RequestCommand;
+import server.command.SearchCommand;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,7 +15,8 @@ public class RequestHandler extends Thread {
 
     private enum command {
         PLAYCOMMAND,
-        SEARCHCOMMAND
+        SEARCHCOMMAND,
+        RANDOMCOMMAND
     }
     private RequestCommand[] commandPool;
 
@@ -19,6 +25,7 @@ public class RequestHandler extends Thread {
         commandPool = new RequestCommand[command.values().length];
         commandPool[0] = new PlayCommand();
         commandPool[1] = new SearchCommand();
+        commandPool[2] = new RandomCommand();
     }
 
     @Override
