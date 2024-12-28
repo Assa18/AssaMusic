@@ -19,7 +19,7 @@ public class Server {
             serverSocket = new ServerSocket(15000);
             System.out.println("Server running! Waiting for requests...");
         } catch (IOException e) {
-            System.out.println("Error while starting server!");
+            System.out.println("Server: error while starting server!");
         }
     }
 
@@ -28,7 +28,7 @@ public class Server {
             try {
                 new RequestHandler(serverSocket.accept()).start();
             } catch (IOException e) {
-                System.out.println("Error while accepting requests!");
+                System.out.println("Server: error while accepting requests!");
             }
         }
     }

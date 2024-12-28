@@ -13,16 +13,11 @@ import java.net.Socket;
 public class RequestHandler extends Thread {
     private Socket socket;
 
-    private enum command {
-        PLAYCOMMAND,
-        SEARCHCOMMAND,
-        RANDOMCOMMAND
-    }
     private RequestCommand[] commandPool;
 
     public RequestHandler(Socket socket) {
         this.socket = socket;
-        commandPool = new RequestCommand[command.values().length];
+        commandPool = new RequestCommand[3];
         commandPool[0] = new PlayCommand();
         commandPool[1] = new SearchCommand();
         commandPool[2] = new RandomCommand();
@@ -33,13 +28,13 @@ public class RequestHandler extends Thread {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             int type = Integer.parseInt(br.readLine());
-            System.out.println(type +"");
+            System.out.println("Server: " + type);
             String msg = br.readLine();
-            System.out.println("Message got! " + msg);
+            System.out.println("Server: message got! " + msg);
 
             commandPool[type].execute(socket, msg);
         } catch (IOException e) {
-            System.out.println("Error handling request!");
+            System.out.println("Server: error handling request!");
         }
     }
 }

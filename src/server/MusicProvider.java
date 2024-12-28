@@ -49,8 +49,9 @@ public class MusicProvider {
 
             br.close();
         } catch (IOException e) {
-            System.out.println("ERROR: input file not found!");
+            System.out.println("Server: error input file not found!");
         }
+        System.out.println("Server: models loaded!");
         loaded = true;
     }
 

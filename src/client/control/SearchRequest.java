@@ -47,6 +47,7 @@ public class SearchRequest extends MusicRequest{
                 throw new RuntimeException(e);
             }
         }
+        System.out.println("Got " + tmp.size() + " results");
 
         return tmp;
     }

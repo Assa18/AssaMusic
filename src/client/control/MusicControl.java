@@ -96,7 +96,6 @@ public class MusicControl implements MusicEventListener {
 
     @Override
     public void playNextSong() {
-        System.out.println("Innen!");
         if (musicModel.getQueueList().isEmpty()) {
             return;
         }

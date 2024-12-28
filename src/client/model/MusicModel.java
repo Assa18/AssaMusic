@@ -57,6 +57,5 @@ public class MusicModel {
         activeModel = new Music();
         searchList = new LinkedList<>();
         queueList = new LinkedList<>();
-        System.out.println("Musicmodel initialized!");
     }
 }

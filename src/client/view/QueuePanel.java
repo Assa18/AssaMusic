@@ -31,7 +31,6 @@ public class QueuePanel extends JPanel {
     public QueuePanel() {
         setBackground(Color.lightGray);
 
-
         listModel = new DefaultListModel<>();
         queueList = new JList(listModel);
 

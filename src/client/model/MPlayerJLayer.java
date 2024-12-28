@@ -23,13 +23,10 @@ public class MPlayerJLayer implements MusicPlayer {
         new Thread(() -> {
             while (true) {
                 if (player != null && player.isComplete()) {
-                    System.out.println("The song is finished!");
                     listener.playNextSong();
-                    //break;
                 }
                 if (!isPaused && player != null && fileInputStream != null){
                     listener.setPosition(getPosition());
-                    System.out.println(getPosition()+"");
                 }
                 try {
                     Thread.sleep(1000);
@@ -42,6 +39,8 @@ public class MPlayerJLayer implements MusicPlayer {
 
     @Override
     public void load(File file) {
+        isPaused = true;
+        listener.setPosition(0);
         source = file;
         if (playerThread != null) {
             if (player != null) {
@@ -62,7 +61,15 @@ public class MPlayerJLayer implements MusicPlayer {
                 try {
                     player.play();
                 } catch (JavaLayerException e) {
-                    throw new RuntimeException(e);
+                    isPaused = true;
+                    listener.setPosition(0);
+                    System.out.println("Error with playing song!");
+                    if (playerThread != null) {
+                        Thread tmp = playerThread;
+                        playerThread = null;
+                        tmp.interrupt();
+                    }
+                    listener.playNextSong();
                 }
             });
         } catch (JavaLayerException | IOException e) {
@@ -73,6 +80,7 @@ public class MPlayerJLayer implements MusicPlayer {
     @Override
     public void start() {
         playerThread.start();
+        isPaused = false;
     }
 
     @Override
@@ -95,7 +103,6 @@ public class MPlayerJLayer implements MusicPlayer {
 
     @Override
     public void resume() {
-        isPaused = false;
         try {
             fileInputStream = new FileInputStream(source);
             fileInputStream.skip(pauseLocation);
@@ -108,11 +115,22 @@ public class MPlayerJLayer implements MusicPlayer {
         } catch (JavaLayerException e) {
             throw new RuntimeException(e);
         }
+        isPaused = false;
+
         playerThread = new Thread(() -> {
             try {
                 player.play();
             } catch (JavaLayerException e) {
-                throw new RuntimeException(e);
+                isPaused = true;
+                listener.setPosition(0);
+                System.out.println("Error with playing song!");
+                if (playerThread != null) {
+                    Thread tmp = playerThread;
+                    playerThread = null;
+                    tmp.interrupt();
+                }
+
+                listener.playNextSong();
             }
         });
         playerThread.start();

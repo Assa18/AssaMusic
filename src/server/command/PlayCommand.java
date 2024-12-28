@@ -6,7 +6,7 @@ import java.io.*;
 import java.net.Socket;
 
 public class PlayCommand implements RequestCommand{
-    MusicProvider provider;
+    private MusicProvider provider;
 
     public PlayCommand() {
         provider = MusicProvider.getInstance();
@@ -21,7 +21,7 @@ public class PlayCommand implements RequestCommand{
             byte[] buffer = new byte[4096];
             int bytesRead;
 
-            System.out.println("the music is on its way...");
+            System.out.println("Server: the music is on its way...");
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 outputStream.write(buffer,0,bytesRead);
             }
@@ -29,9 +29,9 @@ public class PlayCommand implements RequestCommand{
             inputStream.close();
             socket.close();
 
-            System.out.println("music sent!");
+            System.out.println("Server: music sent!");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Server error with sending music source!");
         }
     }
 }

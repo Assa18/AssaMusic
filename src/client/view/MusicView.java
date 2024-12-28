@@ -25,7 +25,6 @@ public class MusicView extends JFrame {
     private SearchPanel searchPanel;
     private QueuePanel queuePanel;
 
-    private MusicPlayer player;
 
     public MusicView() {
         contentPanel = new JPanel();
@@ -59,12 +58,11 @@ public class MusicView extends JFrame {
         btnMusic.addActionListener(e -> layout.show(cardPanel, "musicP"));
         btnQueue.addActionListener(e -> layout.show(cardPanel, "queueP"));
 
-        player = MusicPlayerFactory.getMusicPlayer();
 
         setContentPane(contentPanel);
         setBounds(20,20,500,500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-       
+
     }
     public void addListener(MusicEventListener listener) {
         musicPanel.addListener(listener);

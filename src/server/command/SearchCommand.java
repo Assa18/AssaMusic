@@ -24,6 +24,7 @@ public class SearchCommand implements RequestCommand{
                     throw new RuntimeException(e);
                 }
             });
+            System.out.println("Server: sent results for searching");
             bw.write("stop\n");
             bw.flush();
         } catch (IOException e) {

@@ -38,8 +38,6 @@ public class SearchPanel extends JPanel {
         resultsPanel.setBackground(new Color(255,255,255, 50));
 
         searchButton = new JButton("Search");
-        // searchButton.setBackground(new Color(0,0,0,0));
-        // searchButton.setBorderPainted(false);
         searchField = new JTextField();
         searchField.setPreferredSize(new Dimension(200,20));
         searchToolPanel.add(searchField);

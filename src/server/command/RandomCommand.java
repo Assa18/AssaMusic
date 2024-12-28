@@ -8,7 +8,7 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 public class RandomCommand implements RequestCommand {
-    MusicProvider provider;
+    private MusicProvider provider;
 
     public RandomCommand() {
         provider = MusicProvider.getInstance();
@@ -25,10 +25,11 @@ public class RandomCommand implements RequestCommand {
                 bw.flush();
             }
 
+            System.out.println("Server: sent " + number + " songs");
             bw.write("stop\n");
             bw.flush();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Server: error with sending random musics");
         }
     }
 }

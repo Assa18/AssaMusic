@@ -36,7 +36,7 @@ public class MusicPanel extends JPanel {
         add(lblInfo, BorderLayout.NORTH);
 
         controlPanel = new JPanel();
-        btnStart = new JButton("Stop");
+        btnStart = new JButton("Start");
         btnNext = new JButton("Next");
         controlPanel.add(btnStart);
         controlPanel.add(btnNext);
@@ -67,7 +67,6 @@ public class MusicPanel extends JPanel {
            while (true) {
                if (player.isRunning()) {
                    panelCurSize.setBounds(0,0,(int)(musicModel.getProgress()*200),20);
-                   System.out.println((int)(musicModel.getProgress()*200)+"--");
                    panelProgress.repaint();
                }
                try {
@@ -75,16 +74,21 @@ public class MusicPanel extends JPanel {
                } catch (InterruptedException e) {
                    throw new RuntimeException(e);
                }
+
+               if (player.isRunning()) {
+                   btnStart.setText("Stop");
+               }
+               else {
+                   btnStart.setText("Start");
+               }
            }
         }).start();
 
         btnStart.addActionListener(e -> {
             if (player.isRunning()) {
-                btnStart.setText("Start");
                 player.stop();
             }
             else{
-                btnStart.setText("Stop");
                 player.resume();
             }
         });
